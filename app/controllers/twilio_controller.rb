@@ -50,6 +50,7 @@ class TwilioController < ApplicationController
    end
 
    if session["page"] == "snap_citizen_question" && session["counter"] == 3
+    session["citizen"] = params[:Body].strip.downcase
     if session["citizen"]  == "no"
        # if the user is not a citizen, mRelief refers them to a paralegal
        message = "What is your zipcode?"
@@ -64,7 +65,7 @@ class TwilioController < ApplicationController
    end
 
    if session["page"] == "snap_age_question" && session["counter"] == 4
-     session["age"] = params[:Body].strip
+     session["age"] = params[:Body].strip.to_i
      if session["age"] >= 18
       message = "What is the number of people living in your household including yourself? Enter a number"
       session["page"] = "snap_household_question"
