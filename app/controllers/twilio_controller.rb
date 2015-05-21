@@ -128,8 +128,9 @@ class TwilioController < ApplicationController
         snap_eligibility = SnapEligibilitySenior.find_by({ :snap_dependent_no => snap_dependent_no })
       end
 
-      if snap_gross_income < snap_eligibility.snap_gross_income
-        message = "You may be in luck! You likely qualify for foodstamps. To access your food stamps, go to #{@lafcenter.center} at #{@lafcenter.address} #{@lafcenter.city}, #{@lafcenter.zipcode.to_i }, #{@lafcenter.telephone}. "
+      if snap_gross_income < snap_eligibility.snap_gross_income.to_i
+#        message = "You may be in luck! You likely qualify for foodstamps. To access your food stamps, go to #{@lafcenter.center} at #{@lafcenter.address} #{@lafcenter.city}, #{@lafcenter.zipcode.to_i }, #{@lafcenter.telephone}. "
+        message = "You may be in luck! You likely qualify for foodstamps. To apply for food stamps, go to the Gambell District Office at 400 Gambell Street, Anchorage, 99501, or call 1-888-876-2477."      
       else
         message = "Based on your household size and income, you likely do not qualify for food stamps. To access additional resources, please call 211. "
       end
@@ -146,8 +147,8 @@ class TwilioController < ApplicationController
         snap_eligibility = SnapEligibility.find_by({ :snap_dependent_no => snap_dependent_no })
       end
 
-      if snap_gross_income < snap_eligibility.snap_gross_income
-        message = "You may be in luck! You likely qualify for foodstamps. To access your food stamps, go to #{@lafcenter.center} at #{@lafcenter.address} #{@lafcenter.city}, #{@lafcenter.zipcode.to_i }, #{@lafcenter.telephone}. "
+      if snap_gross_income < snap_eligibility.snap_gross_income  
+        message = "You may be in luck! You likely qualify for foodstamps. To apply for food stamps, go to the Gambell District Office at 400 Gambell Street, Anchorage, 99501, or call 1-888-876-2477." 
       else
         message = "Based on your household size and income, you likely do not qualify for food stamps. To access additional resources, please call 211. "
       end
@@ -158,12 +159,13 @@ class TwilioController < ApplicationController
     session["zipcode"] = params[:Body].strip
      user_zipcode = session["zipcode"]
      @zipcode = user_zipcode << ".0"
-     @lafcenter = LafCenter.find_by(:zipcode => @zipcode)
-     if @lafcenter.present?
-     else
-       @lafcenter = LafCenter.find_by(:id => 10)
-     end
-     message = "We cannot determine your eligibility at this time. To discuss your situation with a Food Stamp expert, go to the LAF #{@lafcenter.center} at #{@lafcenter.address} #{@lafcenter.city}, #{@lafcenter.zipcode.to_i } or call #{@lafcenter.telephone}."
+#     @lafcenter = LafCenter.find_by(:zipcode => @zipcode)
+#     if @lafcenter.present?
+#     else
+#       @lafcenter = LafCenter.find_by(:id => 10)
+#     end
+#     message = "We cannot determine your eligibility at this time. To discuss your situation with a Food Stamp expert, go to the LAF #{@lafcenter.center} at #{@lafcenter.address} #{@lafcenter.city}, #{@lafcenter.zipcode.to_i } or call #{@lafcenter.telephone}."
+     message = "We cannot determine your eligibility at this time. To discuss your situation with a Food Stamp expert, go to the Gambell District Office at 400 Gambell Street, Anchorage, 99501, 1-888-876-2477." 
    end
 
    # Food stamps user is not a US citizen, we refer them to a LAF center
