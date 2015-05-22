@@ -147,7 +147,7 @@ class TwilioController < ApplicationController
         snap_eligibility = SnapEligibility.find_by({ :snap_dependent_no => snap_dependent_no })
       end
 
-      if snap_gross_income < snap_eligibility.snap_gross_income  
+      if snap_gross_income < snap_eligibility.snap_gross_income.to_i  
         message = "You may be in luck! You likely qualify for foodstamps. To apply for food stamps, go to the Gambell District Office at 400 Gambell Street, Anchorage, 99501, or call 1-888-876-2477." 
       else
         message = "Based on your household size and income, you likely do not qualify for food stamps. To access additional resources, please call 211. "
@@ -165,20 +165,21 @@ class TwilioController < ApplicationController
 #       @lafcenter = LafCenter.find_by(:id => 10)
 #     end
 #     message = "We cannot determine your eligibility at this time. To discuss your situation with a Food Stamp expert, go to the LAF #{@lafcenter.center} at #{@lafcenter.address} #{@lafcenter.city}, #{@lafcenter.zipcode.to_i } or call #{@lafcenter.telephone}."
-     message = "We cannot determine your eligibility at this time. To discuss your situation with a Food Stamp expert, go to the Gambell District Office at 400 Gambell Street, Anchorage, 99501, 1-888-876-2477." 
+     message = "We cannot determine your eligibility at this time. To discuss your situation with a Food Stamp expert, go to the Gambell District Office at 400 Gambell Street, Anchorage, 99501, or call 1-888-876-2477." 
    end
 
    # Food stamps user is not a US citizen, we refer them to a LAF center
    if session["page"] == "snap_eligible_maybe" && session["counter"] == 4
     session["zipcode"] = params[:Body].strip
      user_zipcode = session["zipcode"]
-     @zipcode = user_zipcode << ".0"
-     @lafcenter = LafCenter.find_by(:zipcode => @zipcode)
-     if @lafcenter.present?
-     else
-       @lafcenter = LafCenter.find_by(:id => 10)
-     end
-     message = "We cannot determine your eligibility at this time. To discuss your situation with a Food Stamp expert, go to the LAF #{@lafcenter.center} at #{@lafcenter.address} #{@lafcenter.city}, #{@lafcenter.zipcode.to_i } or call #{@lafcenter.telephone}."
+#     @zipcode = user_zipcode << ".0"
+#     @lafcenter = LafCenter.find_by(:zipcode => @zipcode)
+#     if @lafcenter.present?
+#     else
+#       @lafcenter = LafCenter.find_by(:id => 10)
+#     end
+#     message = "We cannot determine your eligibility at this time. To discuss your situation with a Food Stamp expert, go to the LAF #{@lafcenter.center} at #{@lafcenter.address} #{@lafcenter.city}, #{@lafcenter.zipcode.to_i } or call #{@lafcenter.telephone}."
+     message = "We cannot determine your eligibility at this time. To discuss your situation with a Food Stamp expert, go to the Gambell District Office at 400 Gambell Street, Anchorage, 99501, or call 1-888-876-2477."
    end
 
    # Food stamps user is younger than 18
